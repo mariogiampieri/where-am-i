@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Where Am I?</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="jquery-1.11.2.min.js"></script>
+  <meta name="twitter:widgets:theme" content="light">
+  <meta name="twitter:widgets:link-color" content="#55acee">
+  <meta name="twitter:widgets:border-color" content="#55acee">
+
+<!--jQuery stuff-->
+$(document).ready(function(){
+
+   $("button").click(function(){
+        $("#header").hide();
+    });
+<a href="results.html"></a>
+});
+<!--Ajax functions-->
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude;
+}
+
+function loadXMLDoc()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+}
+xmlhttp.open("GET","http://api.census.gov/data/2013/pep/natstprc?get=DOM&for=state:02&DATE=6&key=c578327f5fb8e40e00fa608cdd7230781a8d2e00",true);
+xmlhttp.send();
+}
+
+</script>
+</head>
+
+<body>
+<form action= "{% url 'coords:find' question.id %}" method = "post"></form> ###<-need to figure out how to make this take the coordinates from the user
+<div class="container">
+  <div class="jumbotron">
+    <h1>Where am I?</h1>
+      <p id="header">where am i</p>
+    <h4>Places are not always what they seem. The concrete jungle used to be a rich ecological place. Search below to see what used to be here.</h4>
+    <div style=" text-align: center;"><button type="button" class="btn btn-default" onclick="getLocation()">  Show me </button>
+    <p id="demo"></p>
+
+
+    </div>
+
+
+  </div>
+
+<!--Body-->
+<div class="container">
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+</body>
+</html>
+</div>
+
+</body>
+
+</html>

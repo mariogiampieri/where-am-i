@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>leaflet test</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <style>
+#map {
+    width:90%;
+    height:500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+</head>
+<body>
+ <div id="map"></div>
+
+ <script>
+    var map = L.map('map', {
+    center: [40.7142700 , -74.0059700],
+    zoom: 13
+    });
+
+     mapLink =
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        wholink =
+            '<a href="http://stamen.com">Stamen Design</a>';
+        L.tileLayer(
+            'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.jpg', {
+            attribution: '&copy; '+mapLink+' Contributors & '+wholink,
+            maxZoom: 18,
+            }).addTo(map);
+
+ </script>
+</body>
+</html>
+
+
