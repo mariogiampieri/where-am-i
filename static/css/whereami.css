@@ -183,9 +183,12 @@ optgroup {
   font-weight: bold;
 }
 table {
-  border-spacing: 0;
-  border-collapse: collapse;
+    border-spacing: 0;
+    border-collapse: collapse;
+    vertical-align: middle;
+    max-width: 800px;
 }
+
 td,
 th {
   padding: 0;
