@@ -10,8 +10,22 @@ html {
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
-map { height: 200;
 
+#map-container {
+    height: 700px;
+    width: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -10;
+    display: none;
+}
+
+#map {
+    top: 50%;
+    left: 50%;
+    /*height: 700 px;*/
+    position: relative;
 }
 body {
   margin: 0;
@@ -4566,6 +4580,7 @@ a.list-group-item.active > .badge,
   height: 100%;
   width: 100%;
   opacity: 0.8;
+  z-index: 10;
 }
 .jumbotron h1,
 .jumbotron .h1 {

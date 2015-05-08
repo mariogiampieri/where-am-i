@@ -1,4 +1,5 @@
 var coordsDiv = $("#coordinates");
+var leafMap = $("#map-container");
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -11,8 +12,7 @@ function getLocation() {
 function getCensusBlock(position){
 	var lat = position.coords.latitude;
 	var lon = position.coords.longitude;
-	coordsDiv.html("Latitude: " + lat + "<br>Longitude: " + lon);
-
+    coordsDiv.html("Latitude: " + lat + "<br>Longitude: " + lon);
 	//getting the FIPS code for the block
 	$.ajax({
 		url: "http://www.broadbandmap.gov/broadbandmap/census/block?latitude=" + lat + "&longitude=" + lon + "&format=jsonp",  
@@ -24,6 +24,8 @@ function getCensusBlock(position){
 	});
 }
 
+var map = L.map(leafMap).setView([51.505, -0.09], 13); //figure out how put user location onto map- remember, L.map() originally contained "map". figure out how to put marker on map in index.html
+
 // keep getting cors errors with this, tried setting jQuery.support.cors = true;, specifying ajax datatype to 'jsonp',
 // and '&jsonp=getBlockData' to the end of the census api request will follow tutorial at http://www.html5rocks.com/en/tutorials/cors/
 function getBlockData(data, textStatus, jqHXR) {
@@ -34,7 +36,7 @@ function getBlockData(data, textStatus, jqHXR) {
     var cblock = fips.slice(11,15);
  	$.ajax({
  		url: "http://api.census.gov/data/2010/sf1?get=P0010001&for=block:" + cblock + "&in=state:" + state + "+county:" + county + "+tract:" + ctract + "&key=c578327f5fb8e40e00fa608cdd7230781a8d2e00", // + "&jsonp=censusResponse", //<-- &jsonp=function_name(name of next function?)"//plug in the fips lookup url here
-        dataType: 'jsonp',
+        dataType: 'jsonp', //try above query string at the state, county, censustract levels to make absolutely sure the string is correct. try in browser and then in application.
         jsonp: 'jsonp',
         cache: false,
         //jsonpCallback: 'censusResponse',
