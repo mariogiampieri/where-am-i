@@ -62,7 +62,6 @@ function getLocation() {
 	    });
     }
 
-
     function getBlockData(data, textStatus, jqHXR) {
  	    var fips = data["Results"]["block"][0]["FIPS"];
  	    var state = fips.slice(0,2);
@@ -83,7 +82,12 @@ function getLocation() {
             }
 	    });
     }
+
     function censusResponse(data, textStatus, jqHXR) {
         var censusData = data;
         console.log("Success")
     }
+
+//to do: link to cartodb.js: http://docs.cartodb.com/cartodb-platform/cartodb-js.html#api-methods
+//make a table in the info window for the data to appear in: https://www.datatables.net/
+//^^ both of the above already have the necessary links and style in index.html
