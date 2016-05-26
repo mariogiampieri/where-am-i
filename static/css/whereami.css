@@ -11,13 +11,27 @@ html {
       -ms-text-size-adjust: 100%;
 }
 
-#map-container {
-    height: 700px;
-    width: 90%;
+#mask {
+    background-color: #000000;
+    height: 100%;
+    width: 100%;
+    color: #000000;
+    opacity: 0.8;
+    z-index: -20;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: -10;
+    top: 0px;
+    left: 0px;
+    /**display: none;**/
+}
+
+
+#map-container {
+    height: 90%;
+    width: 100%;
+    position: absolute;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    z-index: 2;
     /*display: none;*/
 }
 
@@ -26,6 +40,22 @@ html {
     left: 50%;
     /*height: 700 px;*/
     position: relative;
+    z-index: 2;
+}
+
+#tableContainer {
+    width: 600px;
+    top: 50%;
+    left: 50%;
+    z-index: -5;
+    position: absolute;
+    background: #cccccc;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    opacity: 0.9;
+    display: none;
 }
 
 .custom .leaflet-popup-tip,
@@ -926,8 +956,8 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #fff;
-  background-color: #ffffff;
-  background-image: url(../img/split.jpg);
+  background-color: #000000;
+  background-image: url(../img/topo_inverse.jpg);
   background-size: 100%;
   background-repeat: no-repeat;
 }
@@ -4587,7 +4617,7 @@ a.list-group-item.active > .badge,
   height: 100%;
   width: 100%;
   opacity: 0.8;
-  z-index: 10;
+  z-index: 50;
 }
 .jumbotron h1,
 .jumbotron .h1 {

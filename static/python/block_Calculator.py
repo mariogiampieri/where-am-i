@@ -2,10 +2,12 @@ from osgeo import ogr
 import os
 import time
 
+
+
 start = time.time()
 
 # identify input shapefile
-source = ogr.Open('/Users/Mario/Documents/mario_nyc/postgres_nyc/shp/allCity2409vfin.shp', 1)
+source = ogr.Open('/Users/Mario/Documents/whereami/where-am-i/data/selectedBldgs_4326.shp', 1)
 
 # dictionaries define the proportion of each use type for each building type, for use in calculating area by use later
 propRes = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0, 16:1, 17:1, 18:1, 19:0.9612, 20:0.0076, 21:0.0039, 22:0.5574665, 23:0.0020886, 24:0.0223, 25:0, 26:0, 27:0, 28:0, 29:0, 30:0, 32:0, 33:0, 34:0, 35:0, 36:0, 37:0, 38:0, 39:0, 40:0, 41:0, 43:0, 44:0, 45:0, 46:0, 47:0, 48:0, 49:0, 50:0, 51:0.5086451, 52:0, 53:0, 54:0, 55:0, 56:0, 57:0, 58:0, 59:0, 60:0, 61:0, 62:0, 63:0, 64:0, 65:0, 66:0, 67:0, 68:0, 69:0, 70:0, 71:0, 72:0, 73:0, 74:0, 75:0, 76:0, 77:0, 78:0, 79:0, 80:0, 81:0, 82:0}
@@ -22,51 +24,51 @@ layer_defn = layer.GetLayerDefn()
 field_names = [layer_defn.GetFieldDefn(i).GetName() for i in range(layer_defn.GetFieldCount())]
 print len(field_names) #checks to see whether we can access the fields in the shapefile
 
-# # creates the necessary fields to store area calculated for each use
-# print "Creating additional fields..."
-# area_field = ogr.FieldDefn('bdg_area', ogr.OFTReal)
-# layer.CreateField(area_field)
-#
-# res_field = ogr.FieldDefn('res_area', ogr.OFTReal)
-# layer.CreateField(res_field)
-#
-# off_field = ogr.FieldDefn('off_area', ogr.OFTReal)
-# layer.CreateField(off_field)
-#
-# ret_field = ogr.FieldDefn('ret_area', ogr.OFTReal)
-# layer.CreateField(ret_field)
-#
-# pa_field = ogr.FieldDefn('pa_area', ogr.OFTReal)
-# layer.CreateField(pa_field)
+# creates the necessary fields to store area calculated for each use
+print "Creating additional fields..."
+area_field = ogr.FieldDefn('bdg_area', ogr.OFTReal)
+layer.CreateField(area_field)
+
+res_field = ogr.FieldDefn('res_area', ogr.OFTReal)
+layer.CreateField(res_field)
+
+off_field = ogr.FieldDefn('off_area', ogr.OFTReal)
+layer.CreateField(off_field)
+
+ret_field = ogr.FieldDefn('ret_area', ogr.OFTReal)
+layer.CreateField(ret_field)
+
+pa_field = ogr.FieldDefn('pa_area', ogr.OFTReal)
+layer.CreateField(pa_field)
 #
 # gar_field = ogr.FieldDefn('gar_area', ogr.OFTReal)
-# layer.CreateField(gar_field)
-#
-# fac_field = ogr.FieldDefn('fac_area', ogr.OFTReal)
-# layer.CreateField(fac_field)
-#
-# trans_field = ogr.FieldDefn('trans_area', ogr.OFTReal)
-# layer.CreateField(trans_field)
-#
-# hot_field = ogr.FieldDefn('hot_area', ogr.OFTReal)
-# layer.CreateField(hot_field)
-# print "Fields created."
-#
-# # next, need to multiply shape area by number of floors to get total building area
-# print "Calculating total building area..."
-# for row in layer:
-#     geom = row.GetGeometryRef()
-#     shapeArea = geom.GetArea()
-#     numFloors = float(row.GetField('nmbrfloors'))
-#     layer.SetFeature(row)
-#     row.SetField("bdg_area", shapeArea * numFloors)
-#     layer.SetFeature(row)
-# print "Calculated building area."
+layer.CreateField(gar_field)
+
+fac_field = ogr.FieldDefn('fac_area', ogr.OFTReal)
+layer.CreateField(fac_field)
+
+trans_field = ogr.FieldDefn('trans_area', ogr.OFTReal)
+layer.CreateField(trans_field)
+
+hot_field = ogr.FieldDefn('hot_area', ogr.OFTReal)
+layer.CreateField(hot_field)
+print "Fields created."
+
+# next, need to multiply shape area by number of floors to get total building area
+print "Calculating total building area..."
+for row in layer:
+    geom = row.GetGeometryRef()
+    shapeArea = float(row.GetField('Shape_Area'))
+    numFloors = float(row.GetField('nmbrfloors'))
+    layer.SetFeature(row)
+    row.SetField("bdg_area", shapeArea * numFloors)
+    layer.SetFeature(row)
+print "Calculated building area."
 
 # for some reason, when the above adding field functions are not commented out, the stuff below doesn't run; when it is commented out, the below runs just fine.
 # my guess is it has something to do with the way "layer" is used to refer to the input data in both cases.
 
-# then, use dictionaries to input proportion of each use for each building type... multiply by that amount and put into appropriate field
+# # then, use dictionaries to input proportion of each use for each building type... multiply by that amount and put into appropriate field
 for building in layer:
     # residential area
     for id, prop in propRes.iteritems():
